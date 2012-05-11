@@ -11,22 +11,19 @@
 
 #include "ofMain.h"
 #include "ofxScene.h"
+#include "ofxAnimatableFloat.h"
 
 class MyScene1 : public ofxScene{
 
 	virtual void setup(){  //load your scene 1 assets here...
 		printf("MyScene1 setup\n");
-		radius = 0;
-		visible = false;
+		radius.reset(0);
+		radius.setDuration(0.75);
+		radius.setCurve(TANH);
 	};
 	
-	virtual void update(float){ //update scene 1 here		
-		if (visible){ 
-			radius ++;	// grow when appearing
-		}else { 
-			radius -= 2; // shrink when leaving
-		}
-		radius = ofClamp(radius, 0, 150);
+	virtual void update(float dt){ //update scene 1 here		
+		radius.update(dt);
 	};
 	
 	void draw(){ //draw scene 1 here
@@ -35,7 +32,7 @@ class MyScene1 : public ofxScene{
 		ofSetRectMode(OF_RECTMODE_CENTER);
 		for (int i = 0; i < 100; i++) {
 			ofSetColor( ofRandom(255), ofRandom(255), ofRandom(255) );
-			float randRad = ofRandom(radius);
+			float randRad = ofRandom( radius.val() );
 			float randAng = ofRandom(2.0 * M_PI);
 			float xx = ofGetAppPtr()->mouseX + randRad * cosf( randAng );
 			float yy = ofGetAppPtr()->mouseY + randRad * sinf( randAng );
@@ -45,17 +42,16 @@ class MyScene1 : public ofxScene{
 	};
 	
 	//screen notifications
-	void screenWillAppear( ofxScene * fromScreen ){ 
-		radius = 0; // reset our scene when we appear
-		visible = true;
+	void screenWillAppear( ofxScene * fromScreen ){  // reset our scene when we appear
+		radius.reset(0); 
+		radius.animateTo(150);
 	};
 	
 	void screenWillDisappear( ofxScene * toScreen ){ 
-		visible = false;
+		radius.animateTo(0);
 	}
 	
-	float radius;
-	bool visible;
+	ofxAnimatableFloat radius;
 };
 
 #endif

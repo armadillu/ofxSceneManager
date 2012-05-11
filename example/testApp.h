@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxTimeMeasurements.h"
 #include "ofxAnimatableFloat.h"
 
 #include "ofxSceneManager.h"
