@@ -34,10 +34,10 @@ class ofxScene{
 		virtual void draw(){};
 
 		//notifications
-		virtual void screenWillAppear( ofxScene * fromScreen ) { printf("ofxScene::screenWillAppear() :: %s\n", screenID.c_str()); };
-		virtual void screenDidAppear() { printf("ofxScene::screenDidAppear() :: %s\n", screenID.c_str()); };
-		virtual void screenWillDisappear( ofxScene * toScreen) { printf("ofxScene::screenWillDisappear() :: %s\n", screenID.c_str()); };
-		virtual void screenDidDisappear( ofxScene * fromScreen ) { printf("ofxScene::screenDidDisappear() :: %s\n", screenID.c_str()); };
+		virtual void sceneWillAppear( ofxScene * fromScreen ) { printf("ofxScene::sceneWillAppear() :: %s\n", screenID.c_str()); };
+		virtual void sceneDidAppear() { printf("ofxScene::sceneDidAppear() :: %s\n", screenID.c_str()); };
+		virtual void sceneWillDisappear( ofxScene * toScreen) { printf("ofxScene::sceneWillDisappear() :: %s\n", screenID.c_str()); };
+		virtual void sceneDidDisappear( ofxScene * fromScreen ) { printf("ofxScene::sceneDidDisappear() :: %s\n", screenID.c_str()); };
 	
 		//events
 		virtual void keyPressed(int key) {} ;

@@ -15,14 +15,16 @@
 
 class MyScene1 : public ofxScene{
 
-	virtual void setup(){  //load your scene 1 assets here...
+	
+	void setup(){  //load your scene 1 assets here...
 		printf("MyScene1 setup\n");
 		radius.reset(0);
 		radius.setDuration(0.75);
 		radius.setCurve(TANH);
 	};
 	
-	virtual void update(float dt){ //update scene 1 here		
+	
+	void update(float dt){ //update scene 1 here		
 		radius.update(dt);
 	};
 	
@@ -42,12 +44,13 @@ class MyScene1 : public ofxScene{
 	};
 	
 	//screen notifications
-	void screenWillAppear( ofxScene * fromScreen ){  // reset our scene when we appear
+	void sceneWillAppear( ofxScene * fromScreen ){  // reset our scene when we appear
 		radius.reset(0); 
 		radius.animateTo(150);
 	};
 	
-	void screenWillDisappear( ofxScene * toScreen ){ 
+	//screen notifications
+	void sceneWillDisappear( ofxScene * toScreen ){ 
 		radius.animateTo(0);
 	}
 	

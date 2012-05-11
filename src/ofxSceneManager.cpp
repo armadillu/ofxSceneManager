@@ -50,15 +50,15 @@ void ofxSceneManager::update( float dt ){
 
 		curtain.update(dt);
 		if ( curtain.hasReachedBottom() ){			
-			currentScreen->screenDidDisappear(futureScreen);
-			futureScreen->screenWillAppear(currentScreen);
+			currentScreen->sceneDidDisappear(futureScreen);
+			futureScreen->sceneWillAppear(currentScreen);
 			updateHistory( futureScreen );
 			currentScreen = futureScreen;
 			futureScreen = NULL;
 		}
 		
 		if ( curtain.hasReachedTop() ){
-			currentScreen->screenDidAppear();
+			currentScreen->sceneDidAppear();
 		}
 	}else{
 		futureScreen = NULL;			
@@ -138,7 +138,7 @@ bool ofxSceneManager::goToScreen( string ID, bool regardless, bool doTransition)
 			if (next != NULL){
 				futureScreen = next;
 				curtain.dropAndRaiseCurtain(curtainDropTime, curtainStayTime, curtainRiseTime, regardless);
-				currentScreen->screenWillDisappear(futureScreen);				
+				currentScreen->sceneWillDisappear(futureScreen);				
 				return true;
 			}else{
 				printf("ofxSceneManager::gotoScreen(%s) >> screen not found!\n", ID.c_str());
@@ -147,10 +147,10 @@ bool ofxSceneManager::goToScreen( string ID, bool regardless, bool doTransition)
 			
 			if (next != NULL){
 				//notify
-				currentScreen->screenWillDisappear(next);
-				next->screenWillAppear(currentScreen);
-				currentScreen->screenDidDisappear(futureScreen);
-				next->screenDidAppear();
+				currentScreen->sceneWillDisappear(next);
+				next->sceneWillAppear(currentScreen);
+				currentScreen->sceneDidDisappear(futureScreen);
+				next->sceneDidAppear();
 				//hot-swap current screens
 				currentScreen = next;
 				futureScreen = NULL;

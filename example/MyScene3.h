@@ -14,17 +14,17 @@
 
 class MyScene3 : public ofxScene{
 
-	void setup(){ 
+	
+	void setup(){  //load your scene 3 assets here...
 		printf("MyScene3 setup\n");
-		//load your scene 3 assets here...
 	};
 	
-	void update(float){
-		//update scene 3 here
+	
+	void update(float){ //update scene 3 here
 	};
 	
-	void draw(){
-		//draw scene 3 here
+	
+	void draw(){ //draw scene 3 here
 		ofSetColor(128);
 		ofNoFill();
 		ofBeginShape();
@@ -34,7 +34,6 @@ class MyScene3 : public ofxScene{
 		ofEndShape();
 		ofFill();
 	};
-	
 };
 
 #endif
