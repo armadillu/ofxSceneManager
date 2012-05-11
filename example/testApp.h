@@ -8,9 +8,9 @@
 #include "MyScene2.h"
 #include "MyScene3.h"
 
-#define SCREEN_1	"Screen1"
-#define SCREEN_2	"Screen2"
-#define SCREEN_3	"Screen3"
+#define SCENE_1	"Scene1"
+#define SCENE_2	"Scene2"
+#define SCENE_3	"Scene3"
 
 
 class testApp : public ofBaseApp{

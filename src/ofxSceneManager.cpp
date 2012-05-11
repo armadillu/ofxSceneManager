@@ -117,11 +117,11 @@ void ofxSceneManager::drawDebug(){
 	int x = 20;
 	int lineHeight = 15;
 	if (currentScreen){
-		ofDrawBitmapString( "current ofxScene: " + currentScreen->getScreenID() , x, y);
+		ofDrawBitmapString( "Current Scene: " + currentScreen->getScreenID() , x, y);
 		y += lineHeight;
 	}
 	if (futureScreen){
-		ofDrawBitmapString( "Future ofxScene: " + futureScreen->getScreenID() , x, y);
+		ofDrawBitmapString( "Future Scene: " + futureScreen->getScreenID() , x, y);
 		y += lineHeight;
 	}
 }

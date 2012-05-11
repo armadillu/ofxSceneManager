@@ -43,7 +43,7 @@ class ofxSceneManager{
 		void setCurtainDropTime(float t);
 		void setCurtainStayTime(float t);
 		void setCurtainRiseTime(float t);
-		void setOverlapUpdate(bool o); // if true, we will update both screens while transitioning , otherwise just one at a time
+		void setOverlapUpdate(bool o); // if true, we will update both screens while transitioning, otherwise just one at a time
 
 	private:
 

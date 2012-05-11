@@ -19,7 +19,7 @@ class MyScene1 : public ofxScene{
 	void setup(){  //load your scene 1 assets here...
 		printf("MyScene1 setup\n");
 		radius.reset(0);
-		radius.setDuration(0.75);
+		radius.setDuration(1.5);
 		radius.setCurve(TANH);
 	};
 	

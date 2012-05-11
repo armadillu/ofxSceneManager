@@ -51,7 +51,7 @@ class ofxScene{
 		//TODO - touch events!
 	
 		//visual debug
-		virtual void drawDebug(){ ofDrawBitmapString( "I am screen: " + screenID, ofGetWidth() - 200, 20); }
+		virtual void drawDebug(){ ofDrawBitmapString( "I am Scene: " + screenID, ofGetWidth() - 200, 20); }
 	
 		string getScreenID(){ return screenID;}
 		

@@ -12,14 +12,14 @@ void testApp::setup(){
 	///////////////////////////////////////
 	
 	screenManager = new ofxSceneManager();
-	screenManager->addScreen( new MyScene1(), SCREEN_1);
-	screenManager->addScreen( new MyScene2(), SCREEN_2);
-	screenManager->addScreen( new MyScene3(), SCREEN_3);
+	screenManager->addScreen( new MyScene1(), SCENE_1);
+	screenManager->addScreen( new MyScene2(), SCENE_2);
+	screenManager->addScreen( new MyScene3(), SCENE_3);
 	
 	screenManager->setDrawDebug(true);
-	screenManager->setCurtainDropTime(0.5);
+	screenManager->setCurtainDropTime(1.0);
 	screenManager->setCurtainStayTime(0.0);
-	screenManager->setCurtainRiseTime(0.5);
+	screenManager->setCurtainRiseTime(1.0);
 	screenManager->setOverlapUpdate(true);
 }
 
@@ -42,9 +42,9 @@ void testApp::draw(){
 
 void testApp::keyPressed(int key){
 
-	if (key == '1') screenManager->goToScreen(SCREEN_1, true); /* true >> regardless of curtain state (so u can change state while curtain is moving)*/
-	if (key == '2') screenManager->goToScreen(SCREEN_2);
-	if (key == '3') screenManager->goToScreen(SCREEN_3);
+	if (key == '1') screenManager->goToScreen(SCENE_1, true); /* true >> regardless of curtain state (so u can change state while curtain is moving)*/
+	if (key == '2') screenManager->goToScreen(SCENE_2);
+	if (key == '3') screenManager->goToScreen(SCENE_3);
 }
 
 
