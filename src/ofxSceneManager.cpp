@@ -12,10 +12,10 @@
 
 ofxSceneManager::ofxSceneManager(){
 
-	currentScreen = futureScreen = NULL;
-	curtainDropTime = 0.5;
-	curtainStayTime = 0.0;
-	curtainRiseTime = 0.5;
+	currentScene = futureScene = NULL;
+	curtainDropTime = 0.5f;
+	curtainStayTime = 0.0f;
+	curtainRiseTime = 0.5f;
 	drawDebugInfo = false;
 	overlapUpdate = false;
 }
@@ -24,21 +24,21 @@ ofxSceneManager::ofxSceneManager(){
 ofxSceneManager::~ofxSceneManager(){}
 
 
-void ofxSceneManager::addScreen( ofxScene* newScreen, string screenID ){
+void ofxSceneManager::addScene( ofxScene* newScene, int sceneID ){
 
-	int c = screens.count( screenID );
+	int c = scenes.count( sceneID );
 	
 	if ( c > 0 ){
-		printf("ofxSceneManager::addScreen(%s) >> we already have a screen with that ID", screenID.c_str() );
+		printf("ofxSceneManager::addScene(%d) >> we already have a screen with that ID", sceneID );
 	}else{
-		newScreen->setup();
-		newScreen->setScreenID( screenID );
-		newScreen->setManager( this );
-		screens[screenID] = newScreen;
-		printf("ofxSceneManager::addScreen(%s) >> added screen\n", screenID.c_str() );		
-		if (screens.size() == 1){	//first screen, we activate it
-			currentScreen = getScreen( screenID );
-			goToScreen( screenID, true/*regardless*/, false/*transition*/ ); 
+		newScene->setup();
+		newScene->setSceneID( sceneID );
+		newScene->setManager( this );
+		scenes[sceneID] = newScene;
+		printf("ofxSceneManager::addScene(%d) >> added screen\n", sceneID );		
+		if (scenes.size() == 1){	//first screen, we activate it			
+			goToScene( sceneID, true/*regardless*/, false/*transition*/ ); 
+			currentScene = getScene( sceneID );
 		}
 	}
 }
@@ -50,28 +50,28 @@ void ofxSceneManager::update( float dt ){
 
 		curtain.update(dt);
 		if ( curtain.hasReachedBottom() ){			
-			currentScreen->sceneDidDisappear(futureScreen);
-			futureScreen->sceneWillAppear(currentScreen);
-			updateHistory( futureScreen );
-			currentScreen = futureScreen;
-			futureScreen = NULL;
+			currentScene->sceneDidDisappear(futureScene);
+			futureScene->sceneWillAppear(currentScene);
+			updateHistory( futureScene );
+			currentScene = futureScene;
+			futureScene = NULL;
 		}
 		
 		if ( curtain.hasReachedTop() ){
-			currentScreen->sceneDidAppear();
+			currentScene->sceneDidAppear();
 		}
 	}else{
-		futureScreen = NULL;			
+		futureScene = NULL;			
 	}
 
 	
-	if (currentScreen != NULL){
+	if (currentScene != NULL){
 						
 		vector <ofxScene*> screensToUpdate;
-		screensToUpdate.push_back(currentScreen);
+		screensToUpdate.push_back(currentScene);
 		if (overlapUpdate){
-			if (futureScreen != NULL){
-				screensToUpdate.push_back(futureScreen);
+			if (futureScene != NULL){
+				screensToUpdate.push_back(futureScene);
 			}
 		}
 		
@@ -85,13 +85,13 @@ void ofxSceneManager::update( float dt ){
 
 void ofxSceneManager::draw(){
 
-	if (currentScreen != NULL){
+	if (currentScene != NULL){
 		
-		vector <ofxScene*> screensToDraw;
-		screensToDraw.push_back(currentScreen);
+		vector <ofxScene*> scenesToDraw;
+		scenesToDraw.push_back(currentScene);
 		
-		for (int i = 0; i < screensToDraw.size(); i++){
-			ofxScene * s = screensToDraw[i];
+		for (int i = 0; i < scenesToDraw.size(); i++){
+			ofxScene * s = scenesToDraw[i];
 			s->draw();
 			if (drawDebugInfo){
 				ofSetColor(255, 0, 0);
@@ -116,53 +116,53 @@ void ofxSceneManager::drawDebug(){
 	int y = 20;
 	int x = 20;
 	int lineHeight = 15;
-	if (currentScreen){
-		ofDrawBitmapString( "Current Scene: " + currentScreen->getScreenID() , x, y);
+	if (currentScene){
+		ofDrawBitmapString( "Current Scene: " + ofToString(currentScene->getSceneID()) , x, y);
 		y += lineHeight;
 	}
-	if (futureScreen){
-		ofDrawBitmapString( "Future Scene: " + futureScreen->getScreenID() , x, y);
+	if (futureScene){
+		ofDrawBitmapString( "Future Scene: " + ofToString(futureScene->getSceneID()) , x, y);
 		y += lineHeight;
 	}
 }
 
 
-bool ofxSceneManager::goToScreen( string ID, bool regardless, bool doTransition){
+bool ofxSceneManager::goToScene( int ID, bool regardless, bool doTransition){
 	
 	if ( curtain.isReady() || regardless){
 
-		ofxScene * next = getScreen( ID );
+		ofxScene * next = getScene( ID );
 		
 		if (doTransition){
 			
 			if (next != NULL){
-				futureScreen = next;
+				futureScene = next;
 				curtain.dropAndRaiseCurtain(curtainDropTime, curtainStayTime, curtainRiseTime, regardless);
-				currentScreen->sceneWillDisappear(futureScreen);				
+				if (currentScene) currentScene->sceneWillDisappear(futureScene);				
 				return true;
 			}else{
-				printf("ofxSceneManager::gotoScreen(%s) >> screen not found!\n", ID.c_str());
+				printf("ofxSceneManager::goToScene(%d) >> screen not found!\n", ID);
 			}			
 		}else{	
 			
 			if (next != NULL){
 				//notify
-				currentScreen->sceneWillDisappear(next);
-				next->sceneWillAppear(currentScreen);
-				currentScreen->sceneDidDisappear(futureScreen);
+				if (currentScene) currentScene->sceneWillDisappear(next);
+				next->sceneWillAppear(currentScene);
+				if (currentScene) currentScene->sceneDidDisappear(futureScene);
 				next->sceneDidAppear();
-				//hot-swap current screens
-				currentScreen = next;
-				futureScreen = NULL;
+				//hot-swap current scenes
+				currentScene = next;
+				futureScene = NULL;
 				return true;
 			}
 		}
 
 	}else{
-		if (futureScreen != NULL)
-			printf("ofxSceneManager::gotoScreen(%s) >> CANT DO! we are in the middle of a transition to %s!\n", ID.c_str(), futureScreen->getScreenID().c_str() );
+		if (futureScene != NULL)
+			printf("ofxSceneManager::goToScene(%d) >> CANT DO! we are in the middle of a transition to %s!\n", ID, futureScene->getSceneID() );
 		else
-			printf("ofxSceneManager::gotoScreen(%s) >> CANT DO! we are in the middle of a transition to another screen!\n", ID.c_str() );
+			printf("ofxSceneManager::goToScene(%d) >> CANT DO! we are in the middle of a transition to another screen!\n", ID );
 	}
 	return false;
 }
@@ -177,27 +177,27 @@ void ofxSceneManager::updateHistory( ofxScene * s ){
 }
 
 
-int ofxSceneManager::getNumScreens(){ 
-	return screens.size(); 
+int ofxSceneManager::getNumScenes(){ 
+	return scenes.size(); 
 }
 
 
-ofxScene * ofxSceneManager::getCurrentScreen(){ 
-	return currentScreen;
+ofxScene * ofxSceneManager::getcurrentScene(){ 
+	return currentScene;
 }
 
 
-string ofxSceneManager::getCurrentScreenID(){ 
-	if (currentScreen != NULL )
-		return currentScreen->getScreenID();
+int ofxSceneManager::getcurrentSceneID(){ 
+	if (currentScene != NULL )
+		return currentScene->getSceneID();
 	else
-		return "NULL";
+		return NULL_SCENE;
 }
 
 
-ofxScene * ofxSceneManager::getScreen(string screenID){
-	if ( screens.count( screenID ) > 0 ){
-		return screens[screenID];
+ofxScene * ofxSceneManager::getScene(int sceneID){
+	if ( scenes.count( sceneID ) > 0 ){
+		return scenes[sceneID];
 	}else{
 		return NULL;
 	}
@@ -223,18 +223,57 @@ void ofxSceneManager::setOverlapUpdate(bool t){
 /// ALL EVENTS HERE /////////////////////////////////////////////////////////// TODO
 
 void ofxSceneManager::keyPressed(int key){
-	if (currentScreen != NULL) currentScreen->keyPressed( key );
+	if (currentScene != NULL) currentScene->keyPressed( key );
+}
+
+void ofxSceneManager::keyReleased(int key){
+	if (currentScene != NULL) currentScene->keyReleased( key );
 }
 
 void ofxSceneManager::mouseMoved(int x, int y){	
-	if (currentScreen != NULL) currentScreen->mouseMoved( x, y );
+	if (currentScene != NULL) currentScene->mouseMoved( x, y );
 }
 
-void ofxSceneManager::windowResized (int w, int h){
-	
-	for( map<string,ofxScene*>::iterator ii = screens.begin(); ii != screens.end(); ++ii ){
+void ofxSceneManager::mouseDragged(int x, int y, int button){	
+	if (currentScene != NULL) currentScene->mouseDragged( x, y, button );
+}
+
+void ofxSceneManager::mousePressed(int x, int y, int button){	
+	if (currentScene != NULL) currentScene->mousePressed( x, y, button );
+}
+
+void ofxSceneManager::mouseReleased(int x, int y, int button){	
+	if (currentScene != NULL) currentScene->mouseReleased( x, y, button );
+}
+
+void ofxSceneManager::windowResized (int w, int h){	
+	for( map<int,ofxScene*>::iterator ii = scenes.begin(); ii != scenes.end(); ++ii ){
 		//string key = (*ii).first;
 		ofxScene* t = (*ii).second;
 		t->windowResized(w, h);
 	}
 }
+
+#ifdef TARGET_OF_IPHONE
+void ofxSceneManager::touchDown(ofTouchEventArgs &touch){
+	if (currentScene != NULL) currentScene->touchDown( touch );
+}
+
+void ofxSceneManager::touchMoved(ofTouchEventArgs &touch){
+	if (currentScene != NULL) currentScene->touchMoved( touch );
+}
+
+void ofxSceneManager::touchUp(ofTouchEventArgs &touch){
+	if (currentScene != NULL) currentScene->touchUp( touch );
+}
+
+void ofxSceneManager::touchDoubleTap(ofTouchEventArgs &touch){
+	if (currentScene != NULL) currentScene->touchDoubleTap( touch );
+}
+
+void ofxSceneManager::touchCancelled(ofTouchEventArgs &touch){
+	if (currentScene != NULL) currentScene->touchCancelled( touch );
+}
+#endif
+
+

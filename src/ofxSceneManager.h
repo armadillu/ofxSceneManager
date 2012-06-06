@@ -10,7 +10,9 @@
 #define ofxSceneManager_h
 
 #define MAX_HISTORY	10
+#define NULL_SCENE -1
 
+#include "ofMain.h"
 #include "ofxScreenCurtain.h"
 #include "ofxScene.h"
 
@@ -26,15 +28,28 @@ class ofxSceneManager{
 		void update(float dt);
 		void draw();
 	
-		void addScreen( ofxScene* newScreen, string screenID );
+		void addScene( ofxScene* newScene, int sceneID );
 		
-		bool goToScreen( string screenID, bool regardless = false, bool doTransition = true );
+		bool goToScene( int sceneID, bool regardless = false, bool doTransition = true );
 
-		//Events
-		void windowResized(int w, int h);
+		//events - desktop
 		void keyPressed(int key);
-		void mouseMoved(int x, int y);
+		void keyReleased(int key);
+		void mouseMoved(int x, int y );
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
+		void windowResized(int w, int h);		
 		
+		//touch events - iphone
+		#ifdef TARGET_OF_IPHONE
+		void touchDown(ofTouchEventArgs &touch);
+		void touchMoved(ofTouchEventArgs &touch);
+		void touchUp(ofTouchEventArgs &touch);
+		void touchDoubleTap(ofTouchEventArgs &touch);
+		void touchCancelled(ofTouchEventArgs &touch);
+		#endif
+	
 		//debug
 		void setDrawDebug(bool debug){ drawDebugInfo = debug; }
 		bool getDrawDebug(){ return drawDebugInfo; }
@@ -43,24 +58,24 @@ class ofxSceneManager{
 		void setCurtainDropTime(float t);
 		void setCurtainStayTime(float t);
 		void setCurtainRiseTime(float t);
-		void setOverlapUpdate(bool o); // if true, we will update both screens while transitioning, otherwise just one at a time
+		void setOverlapUpdate(bool o); // if true, we will update both scenes while transitioning, otherwise just one at a time
 
+		int getNumScenes();
+		ofxScene * getcurrentScene();
+		ofxScene * getScene(int sceneID);
+		int getcurrentSceneID();
+	
 	private:
-
-		int getNumScreens();
-		ofxScene * getCurrentScreen();
-		string getCurrentScreenID();
-		ofxScene * getScreen(string screenID);
 
 		void updateHistory( ofxScene* );
 		void drawDebug();
 	
-		map <string, ofxScene *>		screens; //fast access to screen by sID
+		map <int, ofxScene *>		scenes; //fast access to screen by sID
 			
-		ofxScene*						currentScreen;
-		ofxScene*						futureScreen;
+		ofxScene*						currentScene;
+		ofxScene*						futureScene;
 	
-		bool						overlapUpdate; // if true, we will update both screens when transitioning 
+		bool						overlapUpdate; // if true, we will update both scenes when transitioning 
 		bool 						drawDebugInfo;
 
 		vector <ofxScene*>			history;

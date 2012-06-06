@@ -26,20 +26,20 @@ class ofxScene{
 	public:
 
 		ofxScene(){ printf("ofxScene Constructor \n"); };	
-		virtual ~ofxScene() { printf("ofxScene Destructor :: %s\n", screenID.c_str()); }
+		virtual ~ofxScene() { printf("ofxScene Destructor :: %d\n", sceneID); }
 
-		virtual void setup(){ printf("ofxScene setup :: %s\n", screenID.c_str()); };
+		virtual void setup(){ printf("ofxScene setup :: %d\n", sceneID); };
 		
 		virtual void update(float){} ;
 		virtual void draw(){};
 
 		//notifications
-		virtual void sceneWillAppear( ofxScene * fromScreen ) { printf("ofxScene::sceneWillAppear() :: %s\n", screenID.c_str()); };
-		virtual void sceneDidAppear() { printf("ofxScene::sceneDidAppear() :: %s\n", screenID.c_str()); };
-		virtual void sceneWillDisappear( ofxScene * toScreen) { printf("ofxScene::sceneWillDisappear() :: %s\n", screenID.c_str()); };
-		virtual void sceneDidDisappear( ofxScene * fromScreen ) { printf("ofxScene::sceneDidDisappear() :: %s\n", screenID.c_str()); };
+		virtual void sceneWillAppear( ofxScene * fromScreen ) { printf("ofxScene::sceneWillAppear() :: %d\n", sceneID); };
+		virtual void sceneDidAppear() { printf("ofxScene::sceneDidAppear() :: %d\n", sceneID); };
+		virtual void sceneWillDisappear( ofxScene * toScreen) { printf("ofxScene::sceneWillDisappear() :: %d\n", sceneID); };
+		virtual void sceneDidDisappear( ofxScene * fromScreen ) { printf("ofxScene::sceneDidDisappear() :: %d\n", sceneID); };
 	
-		//events
+		//events - desktop
 		virtual void keyPressed(int key) {} ;
 		virtual void keyReleased(int key) {};
 		virtual void mouseMoved(int x, int y ) {};
@@ -48,20 +48,27 @@ class ofxScene{
 		virtual void mouseReleased(int x, int y, int button) {};
 		virtual void windowResized(int w, int h){};
 
-		//TODO - touch events!
+		//touch events - iphone
+		#ifdef TARGET_OF_IPHONE
+		virtual void touchDown(ofTouchEventArgs &touch){};
+		virtual void touchMoved(ofTouchEventArgs &touch){};
+		virtual void touchUp(ofTouchEventArgs &touch){};
+		virtual void touchDoubleTap(ofTouchEventArgs &touch){};
+		virtual void touchCancelled(ofTouchEventArgs &touch){};
+		#endif
 	
 		//visual debug
-		virtual void drawDebug(){ ofDrawBitmapString( "I am Scene: " + screenID, ofGetWidth() - 200, 20); }
+		virtual void drawDebug(){ ofDrawBitmapString( "I am Scene: " + ofToString(sceneID), ofGetWidth() - 200, 20); }
 	
-		string getScreenID(){ return screenID;}
+		int getSceneID(){ return sceneID;}
 		
 	private:
 
 		friend class ofxSceneManager;
-		void setScreenID( string s ){ screenID = s; }
+		void setSceneID( int s ){ sceneID = s; }
 		void setManager( ofxSceneManager *sm ){ manager = sm; }
 	
-		string screenID;
+		int sceneID;
 		ofxSceneManager * manager;
 };
 

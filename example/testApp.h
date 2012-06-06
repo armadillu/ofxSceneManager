@@ -8,13 +8,10 @@
 #include "MyScene2.h"
 #include "MyScene3.h"
 
-#define SCENE_1	"Scene1"
-#define SCENE_2	"Scene2"
-#define SCENE_3	"Scene3"
-
 
 class testApp : public ofBaseApp{
 
+	enum Scenes{ SCENE_1 = 1, SCENE_2, SCENE_3 };
 	public:
 		void setup();
 		void update();
@@ -24,5 +21,5 @@ class testApp : public ofBaseApp{
 	
 		void windowResized(int w, int h);
 	
-		ofxSceneManager *		screenManager;
+		ofxSceneManager *		sceneManager;
 };
