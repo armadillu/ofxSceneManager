@@ -29,14 +29,14 @@ void ofxSceneManager::addScene( ofxScene* newScene, int sceneID ){
 	int c = scenes.count( sceneID );
 	
 	if ( c > 0 ){
-		printf("ofxSceneManager::addScene(%d) >> we already have a screen with that ID", sceneID );
+		printf("ofxSceneManager::addScene(%d) >> we already have a scene with that ID", sceneID );
 	}else{
 		newScene->setup();
 		newScene->setSceneID( sceneID );
 		newScene->setManager( this );
 		scenes[sceneID] = newScene;
-		printf("ofxSceneManager::addScene(%d) >> added screen\n", sceneID );		
-		if (scenes.size() == 1){	//first screen, we activate it			
+		printf("ofxSceneManager::addScene(%d) >> added scene\n", sceneID );		
+		if (scenes.size() == 1){	//first scene, we activate it			
 			goToScene( sceneID, true/*regardless*/, false/*transition*/ ); 
 			currentScene = getScene( sceneID );
 		}
@@ -122,7 +122,6 @@ void ofxSceneManager::drawDebug(){
 	}
 	if (futureScene){
 		ofDrawBitmapString( "Future Scene: " + ofToString(futureScene->getSceneID()) , x, y);
-		y += lineHeight;
 	}
 }
 
@@ -141,7 +140,7 @@ bool ofxSceneManager::goToScene( int ID, bool regardless, bool doTransition){
 				if (currentScene) currentScene->sceneWillDisappear(futureScene);				
 				return true;
 			}else{
-				printf("ofxSceneManager::goToScene(%d) >> screen not found!\n", ID);
+				printf("ofxSceneManager::goToScene(%d) >> scene not found!\n", ID);
 			}			
 		}else{	
 			
@@ -160,9 +159,9 @@ bool ofxSceneManager::goToScene( int ID, bool regardless, bool doTransition){
 
 	}else{
 		if (futureScene != NULL)
-			printf("ofxSceneManager::goToScene(%d) >> CANT DO! we are in the middle of a transition to %s!\n", ID, futureScene->getSceneID() );
+			printf("ofxSceneManager::goToScene(%d) >> CANT DO! we are in the middle of a transition to %d!\n", ID, futureScene->getSceneID() );
 		else
-			printf("ofxSceneManager::goToScene(%d) >> CANT DO! we are in the middle of a transition to another screen!\n", ID );
+			printf("ofxSceneManager::goToScene(%d) >> CANT DO! we are in the middle of a transition to another scene!\n", ID );
 	}
 	return false;
 }

@@ -43,13 +43,13 @@ class MyScene1 : public ofxScene{
 		ofSetRectMode(OF_RECTMODE_CORNER);
 	};
 	
-	//screen notifications
+	//scene notifications
 	void sceneWillAppear( ofxScene * fromScreen ){  // reset our scene when we appear
 		radius.reset(0); 
 		radius.animateTo(150);
 	};
 	
-	//screen notifications
+	//scene notifications
 	void sceneWillDisappear( ofxScene * toScreen ){ 
 		radius.animateTo(0);
 	}

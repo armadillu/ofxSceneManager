@@ -70,10 +70,10 @@ class ofxSceneManager{
 		void updateHistory( ofxScene* );
 		void drawDebug();
 	
-		map <int, ofxScene *>		scenes; //fast access to screen by sID
+		map <int, ofxScene *>		scenes; //fast access to scene by sID
 			
-		ofxScene*						currentScene;
-		ofxScene*						futureScene;
+		ofxScene*					currentScene;
+		ofxScene*					futureScene;
 	
 		bool						overlapUpdate; // if true, we will update both scenes when transitioning 
 		bool 						drawDebugInfo;
