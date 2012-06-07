@@ -15,6 +15,7 @@
 #include "ofMain.h"
 #include "ofxScreenCurtain.h"
 #include "ofxScene.h"
+#include <map>
 
 class ofxScene;
 

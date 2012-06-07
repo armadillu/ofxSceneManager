@@ -61,7 +61,7 @@ class ofxScene{
 		virtual void drawDebug(){ ofDrawBitmapString( "I am Scene: " + ofToString(sceneID), ofGetWidth() - 200, 20); }
 	
 		int getSceneID(){ return sceneID;}
-		
+		ofxSceneManager * getManager(){ return manager;}
 	private:
 
 		friend class ofxSceneManager;

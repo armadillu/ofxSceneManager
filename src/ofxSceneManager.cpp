@@ -18,6 +18,7 @@ ofxSceneManager::ofxSceneManager(){
 	curtainRiseTime = 0.5f;
 	drawDebugInfo = false;
 	overlapUpdate = false;
+	curtain.setAnimationCurve(EASE_IN_EASE_OUT);
 }
 
 
@@ -117,11 +118,15 @@ void ofxSceneManager::drawDebug(){
 	int x = 20;
 	int lineHeight = 15;
 	if (currentScene){
-		ofDrawBitmapString( "Current Scene: " + ofToString(currentScene->getSceneID()) , x, y);
+		ofDrawBitmapString( "Current Scene: " + ofToString(currentScene->getSceneID() ) , x, y);
 		y += lineHeight;
 	}
 	if (futureScene){
 		ofDrawBitmapString( "Future Scene: " + ofToString(futureScene->getSceneID()) , x, y);
+		y += lineHeight;
+	}
+	if (!curtain.isReady()){
+		ofDrawBitmapString( "curtain: " + ofToString(curtain.getCurtainAlpha()) , x, y);
 	}
 }
 
@@ -211,7 +216,7 @@ void ofxSceneManager::setCurtainStayTime(float t){
 }
 
 void ofxSceneManager::setCurtainRiseTime(float t){
-	curtainDropTime = t;
+	curtainRiseTime = t;
 }
 
 void ofxSceneManager::setOverlapUpdate(bool t){
