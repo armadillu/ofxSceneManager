@@ -126,7 +126,7 @@ void ofxSceneManager::drawDebug(){
 		y += lineHeight;
 	}
 	if (!curtain.isReady()){
-		ofDrawBitmapString( "curtain: " + ofToString(curtain.getCurtainAlpha()) , x, y);
+		ofDrawBitmapString( "Curtain: " + ofToString(curtain.getCurtainAlpha(), 2) , x, y);
 	}
 }
 
