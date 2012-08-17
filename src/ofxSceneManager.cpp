@@ -250,7 +250,8 @@ void ofxSceneManager::mouseReleased(int x, int y, int button){
 	if (currentScene != NULL) currentScene->mouseReleased( x, y, button );
 }
 
-void ofxSceneManager::windowResized (int w, int h){	
+void ofxSceneManager::windowResized (int w, int h){
+	curtain.setScreenSize( ofRectangle(0, 0, w, h) );
 	for( map<int,ofxScene*>::iterator ii = scenes.begin(); ii != scenes.end(); ++ii ){
 		//string key = (*ii).first;
 		ofxScene* t = (*ii).second;

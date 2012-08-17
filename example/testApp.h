@@ -12,6 +12,7 @@
 class testApp : public ofBaseApp{
 
 	enum Scenes{ SCENE_1 = 1, SCENE_2, SCENE_3 };
+	
 	public:
 		void setup();
 		void update();
