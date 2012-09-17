@@ -10,6 +10,8 @@
 #include "ofxSceneManager.h"
 #include "ofxScene.h"
 
+ofxSceneManager* ofxSceneManager::singleton = NULL; 
+
 ofxSceneManager::ofxSceneManager(){
 
 	currentScene = futureScene = NULL;
@@ -19,6 +21,13 @@ ofxSceneManager::ofxSceneManager(){
 	drawDebugInfo = false;
 	overlapUpdate = false;
 	curtain.setAnimationCurve(EASE_IN_EASE_OUT);
+}
+
+ofxSceneManager* ofxSceneManager::instance(){
+	if (!singleton){   // Only allow one instance of class to be generated.
+		singleton = new ofxSceneManager();
+	}
+	return singleton;
 }
 
 
@@ -186,12 +195,12 @@ int ofxSceneManager::getNumScenes(){
 }
 
 
-ofxScene * ofxSceneManager::getcurrentScene(){ 
+ofxScene * ofxSceneManager::getCurrentScene(){
 	return currentScene;
 }
 
 
-int ofxSceneManager::getcurrentSceneID(){ 
+int ofxSceneManager::getCurrentSceneID(){
 	if (currentScene != NULL )
 		return currentScene->getSceneID();
 	else

@@ -23,7 +23,7 @@ class ofxSceneManager{
 
 	public:
 
-		ofxSceneManager();
+		static ofxSceneManager* instance();
 		~ofxSceneManager();
 	
 		void update(float dt);
@@ -62,11 +62,14 @@ class ofxSceneManager{
 		void setOverlapUpdate(bool o); // if true, we will update both scenes while transitioning, otherwise just one at a time
 
 		int getNumScenes();
-		ofxScene * getcurrentScene();
+		ofxScene * getCurrentScene();
 		ofxScene * getScene(int sceneID);
-		int getcurrentSceneID();
+		int getCurrentSceneID();
 	
 	private:
+
+		ofxSceneManager(); // use ofxSceneManager::instance() instead!
+		static ofxSceneManager* singleton;
 
 		void updateHistory( ofxScene* );
 		void drawDebug();

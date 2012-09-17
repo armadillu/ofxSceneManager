@@ -33,6 +33,12 @@ class ofxScene{
 		virtual void update(float){} ;
 		virtual void draw(){};
 
+		virtual void showUI(){}
+		virtual void hideUI(){}
+
+		virtual void pauseScene(){}
+		virtual void resumeScene(){}
+
 		//notifications
 		virtual void sceneWillAppear( ofxScene * fromScreen ) { printf("ofxScene::sceneWillAppear() :: %d\n", sceneID); };
 		virtual void sceneDidAppear() { printf("ofxScene::sceneDidAppear() :: %d\n", sceneID); };
