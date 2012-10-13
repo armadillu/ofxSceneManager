@@ -23,6 +23,7 @@ ofxSceneManager::ofxSceneManager(){
 	curtain.setAnimationCurve(EASE_IN_EASE_OUT);
 }
 
+
 ofxSceneManager* ofxSceneManager::instance(){
 	if (!singleton){   // Only allow one instance of class to be generated.
 		singleton = new ofxSceneManager();

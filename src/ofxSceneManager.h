@@ -33,6 +33,8 @@ class ofxSceneManager{
 		
 		bool goToScene( int sceneID, bool regardless = false, bool doTransition = true );
 
+		bool isTransitioning(){ return !curtain.isReady(); }
+
 		//events - desktop
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -42,7 +44,7 @@ class ofxSceneManager{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);		
 		
-		//touch events - iphone
+		//touch events - ios
 		#ifdef TARGET_OF_IPHONE
 		void touchDown(ofTouchEventArgs &touch);
 		void touchMoved(ofTouchEventArgs &touch);
