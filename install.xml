@@ -1,0 +1,30 @@
+<install>
+	<name>ofxSceneManager</name>
+    <version>1.0</version>
+    <author><[CDATA[Oriol Ferrer <oriol@uri.cat> ]]></author>
+   
+    <code_url>https://github.com/armadillu/ofxSceneManager</code_url>
+    <site_url>http://www.uri.cat</site_url>
+    <download_url>https://github.com/armadillu/ofxSceneManager</download_url>
+   
+    <description><![CDATA[
+          ofxSceneManager helps handle different scenes and simple fade-to-black transitions between them. Requires ofxAnimatable and ofxScreenCurtain.
+    ]]></description>
+    
+	<add>
+		
+		<!-- 	=====================================================================	-->
+		<!--	========================== add per project using this addon =========	-->
+		<!-- 	=====================================================================	-->
+	
+		<src>
+			<folder name="addons/ofxSceneManager/src">
+				<file>../../../addons/ofxSceneManager/src/ofxSceneManager.cpp</file>
+				<file>../../../addons/ofxSceneManager/src/ofxSceneManager.h</file>
+				<file>../../../addons/ofxSceneManager/src/ofxScene.h</file>
+			</folder>
+		</src>
+		
+	</add>    
+    
+</install>
