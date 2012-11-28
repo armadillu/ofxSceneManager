@@ -229,6 +229,12 @@ void ofxSceneManager::setCurtainRiseTime(float t){
 	curtainRiseTime = t;
 }
 
+void ofxSceneManager::setCurtainTimes(float drop, float stay, float rise){
+	curtainDropTime = drop;
+	curtainStayTime = stay;
+	curtainRiseTime = rise;
+}
+
 void ofxSceneManager::setOverlapUpdate(bool t){
 	overlapUpdate = t;
 }

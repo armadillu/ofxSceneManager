@@ -61,6 +61,7 @@ class ofxSceneManager{
 		void setCurtainDropTime(float t);
 		void setCurtainStayTime(float t);
 		void setCurtainRiseTime(float t);
+		void setCurtainTimes(float drop, float stay, float rise);
 		void setOverlapUpdate(bool o); // if true, we will update both scenes while transitioning, otherwise just one at a time
 
 		int getNumScenes();
