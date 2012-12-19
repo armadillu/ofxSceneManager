@@ -42,9 +42,9 @@ void ofxSceneManager::addScene( ofxScene* newScene, int sceneID ){
 	if ( c > 0 ){
 		printf("ofxSceneManager::addScene(%d) >> we already have a scene with that ID", sceneID );
 	}else{
+		newScene->setManager( this );
 		newScene->setup();
 		newScene->setSceneID( sceneID );
-		newScene->setManager( this );
 		scenes[sceneID] = newScene;
 		printf("ofxSceneManager::addScene(%d) >> added scene\n", sceneID );		
 		if (scenes.size() == 1){	//first scene, we activate it			
