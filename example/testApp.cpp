@@ -11,7 +11,7 @@ void testApp::setup(){
 		
 	///////////////////////////////////////
 	
-	sceneManager = new ofxSceneManager();
+	sceneManager = ofxSceneManager::instance();
 	sceneManager->addScene( new MyScene1(), SCENE_1);
 	sceneManager->addScene( new MyScene2(), SCENE_2);
 	sceneManager->addScene( new MyScene3(), SCENE_3);
@@ -39,6 +39,11 @@ void testApp::draw(){
 	ofDrawBitmapString( "press 1, 2, or 3 to change scene", ofGetWidth() - 290, ofGetHeight() - 10);	
 }
 
+
+//if you require mouseMoved events in your scenes, forward them to the SceneManager. Same for any other events
+void testApp::mousePressed( int x, int y, int button ){
+	sceneManager->mousePressed(x, y, button);
+}
 
 void testApp::keyPressed(int key){
 	

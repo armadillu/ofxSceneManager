@@ -19,8 +19,9 @@ class MyScene1 : public ofxScene{
 	void setup(){  //load your scene 1 assets here...
 		printf("MyScene1 setup\n");
 		radius.reset(0);
-		radius.setDuration(1.5);
-		radius.setCurve(TANH);
+		radius.setDuration(0.25);
+		radius.setCurve(EASE_IN_EASE_OUT);
+		radius.setRepeatType(LOOP_BACK_AND_FORTH_ONCE);
 	};
 	
 	
@@ -42,16 +43,18 @@ class MyScene1 : public ofxScene{
 		}
 		ofSetRectMode(OF_RECTMODE_CORNER);
 	};
-	
+
+
+	void mousePressed( int x, int y, int button ){
+		radius.animateFromTo(10, 150);
+	}
+
 	//scene notifications
 	void sceneWillAppear( ofxScene * fromScreen ){  // reset our scene when we appear
-		radius.reset(0); 
-		radius.animateTo(150);
 	};
 	
 	//scene notifications
-	void sceneWillDisappear( ofxScene * toScreen ){ 
-		radius.animateTo(0);
+	void sceneWillDisappear( ofxScene * toScreen ){
 	}
 	
 	ofxAnimatableFloat radius;
